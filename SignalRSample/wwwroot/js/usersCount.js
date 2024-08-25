@@ -2,6 +2,7 @@
 
 var connectionUserCount = new signalR.HubConnectionBuilder()
   .configureLogging(signalR.LogLevel.None)
+  .withAutomaticReconnect()
   .withUrl('/hubs/userCount', signalR.HttpTransportType.WebSockets)
   .build();
 
@@ -21,6 +22,18 @@ connectionUserCount.on('updateTotalUsers', (value) => {
 function newWindowLoadedOnClient() {
   connectionUserCount.send('NewWindowReloaded');
 }
+
+connectionUserCount.onclose((error) => {
+  document.body.style.background = 'red';
+});
+
+connectionUserCount.onreconnected((connectionId) => {
+  document.body.style.background = 'green';
+});
+
+connectionUserCount.onreconnecting((error) => {
+  document.body.style.background = 'orange';
+});
 
 // start connection
 
