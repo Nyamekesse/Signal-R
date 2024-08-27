@@ -10,4 +10,5 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options) { }
 
     public DbSet<Order> Orders { get; set; }
+    public DbSet<ChatRoom> ChatRooms { get; set; }
 }
