@@ -54,6 +54,19 @@ public class HomeController : Controller
         return View(chatVm);
     }
 
+    public IActionResult AdvancedChat()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        ChatVM chatVm =
+            new()
+            {
+                Rooms = _context.ChatRooms.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId,
+            };
+        return View(chatVm);
+    }
+
     public IActionResult Notification()
     {
         return View();
